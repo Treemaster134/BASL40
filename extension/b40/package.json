@@ -1,0 +1,33 @@
+{
+  "name": "b40",
+  "displayName": "BASL40",
+  "description": "BASL40 is a language designed for the ABC40 fantasy computer.",
+  "author": {
+    "name": "Anton Lamberth"
+  },
+  "publisher": "Anton Lamberth",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "basl40",
+      "aliases": ["BASL40", "basl40"],
+      "extensions": [".b40",".bas40",".basl40"],
+      "configuration": "./language-configuration.json",
+      "icon": {
+        "light": "./icon.png",
+        "dark": "./icon.png"
+      }
+    }],
+    "grammars": [{
+      "language": "basl40",
+      "scopeName": "source.basl40",
+      "path": "./syntaxes/basl40.tmLanguage.json"
+    }]
+  }
+}

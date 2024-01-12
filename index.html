@@ -1,0 +1,886 @@
+<!--
+
+    Assembly
+    Baseline
+    Computer
+    40
+
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="computer.js"></script>
+</head>
+<body>
+
+    <h2>BASL40 Assembler</h2>
+    <div class="container">
+        
+        
+        
+        <div>
+            <h3>Program</h3>
+            <textarea name="" id="instructions" cols="48" rows="30" class="instructions"></textarea>
+        </div>
+        <div>
+            <h3>Output</h3>
+            <textarea name="" id="outputassembled" cols="24" rows="30" class="output" disabled></textarea>
+        </div>
+        <div>
+            <h3>Instructions</h3>
+            <table>
+                <tr>
+                    <td>Mnemonic</td>
+                    <td>Argument(s)</td>
+                    <td>Operation</td>
+                </tr>
+                <tr>
+                    <td>NOP</td>
+                    <td>None</td>
+                    <td>No operation</td>
+                </tr>
+                <tr>
+                    <td>HLT</td>
+                    <td>None</td>
+                    <td>Stop execution</td>
+                </tr>
+                <tr>
+                    <td>WAI</td>
+                    <td>None</td>
+                    <td>Pauses execution</td>
+                </tr>
+                <tr>
+                    <td>LDR</td>
+                    <td>src</td>
+                    <td>Accumulator ← src</td>
+                </tr>
+                <tr>
+                    <td>LDI</td>
+                    <td>value</td>
+                    <td>Accumulator ← value</td>
+                </tr>
+                <tr>
+                    <td>STO</td>
+                    <td>dest</td>
+                    <td>dest ← Accumulator</td>
+                </tr>
+                <tr>
+                    <td>MOV</td>
+                    <td>src, dest</td>
+                    <td>dest ← src</td>
+                </tr>
+                <tr>
+                    <td>SWA</td>
+                    <td>reg1, reg2</td>
+                    <td>reg1 ↔ reg2</td>
+                </tr>
+                <tr>
+                    <td>LSH</td>
+                    <td>None</td>
+                    <td>Shift accumulator left</td>
+                </tr>
+                <tr>
+                    <td>RSH</td>
+                    <td>None</td>
+                    <td>Shift accumulator right</td>
+                </tr>
+                <tr>
+                    <td>INC</td>
+                    <td>None</td>
+                    <td>Accumulator += 1</td>
+                </tr>
+                <tr>
+                    <td>DEC</td>
+                    <td>None</td>
+                    <td>Accumulator -= 1</td>
+                </tr>
+                <tr>
+                    <td>ADR</td>
+                    <td>src</td>
+                    <td>Accumulator += src</td>
+                </tr>
+                <tr>
+                    <td>ADI</td>
+                    <td>value</td>
+                    <td>Accumulator += value</td>
+                </tr>
+                <tr>
+                    <td>SBR</td>
+                    <td>src</td>
+                    <td>Accumulator -= src</td>
+                </tr>
+                <tr>
+                    <td>SBI</td>
+                    <td>value</td>
+                    <td>Accumulator -= value</td>
+                </tr>
+                <tr>
+                    <td>JMZ</td>
+                    <td>instruction</td>
+                    <td>PC ← instruction if accumulator == 0</td>
+                </tr>
+                <tr>
+                    <td>JMP</td>
+                    <td>instruction</td>
+                    <td>PC ← instruction if accumulator > 0</td>
+                </tr>
+                <tr>
+                    <td>JMN</td>
+                    <td>instruction</td>
+                    <td>PC ← instruction if accumulator < 0</td>
+                </tr>
+                <tr>
+                    <td>JMU</td>
+                    <td>instruction</td>
+                    <td>PC ← instruction</td>
+                </tr>
+                <tr>
+                    <td>RND</td>
+                    <td>min, max</td>
+                    <td>Accumulator ← Random(min, max)</td>
+                </tr>
+                <tr>
+                    <td>ORI</td>
+                    <td>value</td>
+                    <td>Accumulator | value</td>
+                </tr>
+                <tr>
+                    <td>ORR</td>
+                    <td>src</td>
+                    <td>Accumulator | src</td>
+                </tr>
+                <tr>
+                    <td>ANI</td>
+                    <td>value</td>
+                    <td>Accumulator & value</td>
+                </tr>
+                <tr>
+                    <td>ANR</td>
+                    <td>src</td>
+                    <td>Accumulator & src</td>
+                </tr>
+                <tr>
+                    <td>XOI</td>
+                    <td>value</td>
+                    <td>Accumulator ^ value</td>
+                </tr>
+                <tr>
+                    <td>XOR</td>
+                    <td>src</td>
+                    <td>Accumulator ^ src</td>
+                </tr>
+                <tr>
+                    <td>POP</td>
+                    <td>None</td>
+                    <td>Pop Accumulator</td>
+                </tr>
+                <tr>
+                    <td>PSH</td>
+                    <td>None</td>
+                    <td>Push Accumulator</td>
+                </tr>
+                <tr>
+                    <td>INP</td>
+                    <td>None</td>
+                    <td>Input</td>
+                </tr>
+                <tr>
+                    <td>OUT</td>
+                    <td>None</td>
+                    <td>Output</td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <h3>Notes</h3>
+            <ul>
+                <li>Negative values use twos complement</li>
+                <li>Each register can store an 8 bit value</li>
+                <li>Jump addresses are 16-bit unsigned</li>
+                <li>Values can be entered in hex, decimal or binary.</li>
+                <label>Examples:</label>
+                <ul>
+                    <li>Hex: h0F</li>
+                    <li>Decimal: d15</li>
+                    <li>Binary: b00001111</li>
+                </ul>
+                <li>The program counter starts at 0</li>
+                <li>Instead of manually writing jump values, a label can be declared like this:</li>
+                <label>$YOURLABELNAMEHERE</label>
+                <li>And then jumped to:</li>
+                <label>JMU $YOURLABELNAMEHERE</label>
+                <li>The INP instruction does not pause execution</li>
+            </ul>
+            <h3>Registers</h3>
+            <ul>
+                <li>00 - Status</li>
+                <li>01 - Accumulator</li>
+                <li>02 - Input</li>
+                <li>03 - Output</li>
+                <li>04-07 - Pixel display row 1-4</li>
+                <li>08-1F - General purpose memory</li>
+            </ul>
+        </div>
+
+    </div>
+    
+    <script>
+        
+        let instructions = [];
+        let assembledInstructions = [];
+        let jumps = [];
+
+        function jumpLabel(name, value)
+        {
+            this.name = name;
+            this.value = value;
+        }
+
+        function parseJumpLabels()
+        {
+            jumps = [];
+            for(let i = 0; i < instructions.length; i++)
+            {
+                if(instructions[i][0] == "$")
+                {
+                    jumps.push(new jumpLabel(instructions[i], i));
+                }
+            }
+        }
+
+        function throwError(linenumber, text)
+        {
+            console.log("ERROR ON LINE: " + linenumber + ". " + text);
+        }
+
+        
+        
+        function assemble()
+        {   
+            
+            instructions = document.getElementById("instructions").value.split("\n");
+            assembledInstructions = [];
+            parseJumpLabels();
+            
+            for(let i = 0; i < instructions.length; i++)
+            {
+
+                let brokenDownInstruction = instructions[i].split(" ");
+    
+                let newInstruction = ["00000000", "00000000", "00000000"];
+                let opcode = 0;
+                let arg1 = 0;
+                let arg2 = 0;
+    
+                switch(brokenDownInstruction[0])
+                {
+                    case "NOP":
+                        break;
+                    case "HLT":
+                        opcode = 1;
+                        break;
+                    case "WAI":
+                        opcode = 2;
+                        break;
+                    case "LDR":
+                        opcode = 3;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        if(arg1 > 31 || arg1 < 0)
+                        {
+                            throwError(i, "Invalid register");
+                        }
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "LDI":
+                        opcode = 4;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        clampDecimal(arg1);
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "STO":
+                        opcode = 5;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        if(arg1 > 31 || arg1 < 0)
+                        {
+                            throwError(i, "Invalid register");
+                        }
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "MOV":
+                        opcode = 6;
+                        //first argument
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        if(arg1 > 31 || arg1 < 0)
+                        {
+                            throwError(i, "Invalid register");
+                        }
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        
+                        //second argument
+                        if(brokenDownInstruction[2][0] == "h")
+                        {
+                            arg2 = parseInt(brokenDownInstruction[2].substring(1, brokenDownInstruction[2].length), 16);
+                        }
+                        else if(brokenDownInstruction[2][0] == "b")
+                        {
+                            arg2 = Number(new Int8Array(["0b" + brokenDownInstruction[2].substring(1, brokenDownInstruction[2].length)]));
+                        }
+                        else if(brokenDownInstruction[2][0] == "d")
+                        {
+                            arg2 = parseInt(brokenDownInstruction[2].substring(1, brokenDownInstruction[2].length));
+                        }
+                        
+                        if(arg2 > 31 || arg2 < 0)
+                        {
+                            throwError(i, "Invalid register");
+                        }
+    
+                        newInstruction[2] = correctBinary(arg2, 8);
+    
+    
+                        break;
+                    case "SWA":
+                        opcode = 7;
+                        //first argument
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        if(arg1 > 31 || arg1 < 0)
+                        {
+                            throwError(i, "Invalid register");
+                        }
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        
+                        //second argument
+                        if(brokenDownInstruction[2][0] == "h")
+                        {
+                            arg2 = parseInt(brokenDownInstruction[2].substring(1, brokenDownInstruction[2].length), 16);
+                        }
+                        else if(brokenDownInstruction[2][0] == "b")
+                        {
+                            arg2 = Number(new Int8Array(["0b" + brokenDownInstruction[2].substring(1, brokenDownInstruction[2].length)]));
+                        }
+                        else if(brokenDownInstruction[2][0] == "d")
+                        {
+                            arg2 = parseInt(brokenDownInstruction[2].substring(1, brokenDownInstruction[2].length));
+                        }
+                        
+                        if(arg2 > 31 || arg2 < 0)
+                        {
+                            throwError(i, "Invalid register");
+                        }
+    
+                        newInstruction[2] = correctBinary(arg2, 8);
+                        break;
+                    case "LSH":
+                        opcode = 8;
+                        break;
+                    case "RSH":
+                        opcode = 9;
+                        break;
+                    case "INC":
+                        opcode = 10;
+                        break;
+                    case "DEC":
+                        opcode = 11;
+                        break;
+                    case "ADR":
+                        opcode = 12;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        if(arg1 > 31 || arg1 < 0)
+                        {
+                            throwError(i, "Invalid register");
+                        }
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "ADI":
+                        opcode = 13;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        clampDecimal(arg1);
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "SBR":
+                        opcode = 14;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        if(arg1 > 31 || arg1 < 0)
+                        {
+                            throwError(i, "Invalid register");
+                        }
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "SBI":
+                        opcode = 15;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        clampDecimal(arg1);
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "JMZ":
+                        opcode = 16;
+                        //first argument
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 2);
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        else if(brokenDownInstruction[1][0] == "$")
+                        {
+                            for(let j = 0; j < jumps.length; j++)
+                            {
+                                if(brokenDownInstruction[1] == jumps[j].name)
+                                {
+                                    arg1 = jumps[j].value;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        
+    
+                        newInstruction[1] = correctBinary(arg1, 16).substring(0, 8);
+                        newInstruction[2] = correctBinary(arg1, 16).substring(8, 16);
+                        
+                        //second argument
+                        
+    
+    
+                        break;
+                    case "JMP":
+                        opcode = 17;
+                        //first argument
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 2);
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        else if(brokenDownInstruction[1][0] == "$")
+                        {
+                            for(let j = 0; j < jumps.length; j++)
+                            {
+                                if(brokenDownInstruction[1] == jumps[j].name)
+                                {
+                                    arg1 = jumps[j].value;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        
+    
+                        newInstruction[1] = correctBinary(arg1, 16).substring(0, 8);
+                        newInstruction[2] = correctBinary(arg1, 16).substring(8, 16);
+                        
+                        //second argument
+                        
+    
+    
+                        break;
+                    case "JMN":
+                        opcode = 18;
+                        //first argument
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 2);
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        else if(brokenDownInstruction[1][0] == "$")
+                        {
+                            for(let j = 0; j < jumps.length; j++)
+                            {
+                                if(brokenDownInstruction[1] == jumps[j].name)
+                                {
+                                    arg1 = jumps[j].value;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        
+    
+                        newInstruction[1] = correctBinary(arg1, 16).substring(0, 8);
+                        newInstruction[2] = correctBinary(arg1, 16).substring(8, 16);
+                        
+                        //second argument
+                        
+    
+    
+                        break;
+                    case "JMU":
+                        opcode = 19;
+                        //first argument
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 2);
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        else if(brokenDownInstruction[1][0] == "$")
+                        {
+                            for(let j = 0; j < jumps.length; j++)
+                            {
+                                if(brokenDownInstruction[1] == jumps[j].name)
+                                {
+                                    arg1 = jumps[j].value;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        
+    
+                        newInstruction[1] = correctBinary(arg1, 16).substring(0, 8);
+                        newInstruction[2] = correctBinary(arg1, 16).substring(8, 16);
+                        
+                        //second argument
+                        
+    
+    
+                        break;
+                    case "RND":
+                        opcode = 20;
+                        //first argument
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        
+                        //second argument
+                        if(brokenDownInstruction[2][0] == "h")
+                        {
+                            arg2 = parseInt(brokenDownInstruction[2].substring(1, brokenDownInstruction[2].length), 16);
+                        }
+                        else if(brokenDownInstruction[2][0] == "b")
+                        {
+                            arg2 = Number(new Int8Array(["0b" + brokenDownInstruction[2].substring(1, brokenDownInstruction[2].length)]));
+                        }
+                        else if(brokenDownInstruction[2][0] == "d")
+                        {
+                            arg2 = parseInt(brokenDownInstruction[2].substring(1, brokenDownInstruction[2].length));
+                        }
+    
+                        newInstruction[2] = correctBinary(arg2, 8);
+    
+    
+                        break;
+                    case "ORI":
+                        opcode = 21;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        clampDecimal(arg1);
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "ORR":
+                        opcode = 22;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        if(arg1 > 31 || arg1 < 0)
+                        {
+                            throwError(i, "Invalid register");
+                        }
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "ANI":
+                        opcode = 23;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        clampDecimal(arg1);
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "ANR":
+                        opcode = 24;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        if(arg1 > 31 || arg1 < 0)
+                        {
+                            throwError(i, "Invalid register");
+                        }
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "XOI":
+                        opcode = 25;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        clampDecimal(arg1);
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "XOR":
+                        opcode = 26;
+                        
+                        if(brokenDownInstruction[1][0] == "h")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length), 16);
+                        }
+                        else if(brokenDownInstruction[1][0] == "b")
+                        {
+                            arg1 = Number(new Int8Array(["0b" + brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length)]));
+                        }
+                        else if(brokenDownInstruction[1][0] == "d")
+                        {
+                            arg1 = parseInt(brokenDownInstruction[1].substring(1, brokenDownInstruction[1].length));
+                        }
+                        
+                        if(arg1 > 31 || arg1 < 0)
+                        {
+                            throwError(i, "Invalid register");
+                        }
+    
+                        newInstruction[1] = correctBinary(arg1, 8);
+                        break;
+                    case "POP":
+                        opcode = 27;
+                        break;
+                    case "PSH":
+                        opcode = 28;
+                        break;
+                    case "INP":
+                        opcode = 29;
+                        break;
+                    case "OUT":
+                        opcode = 30;
+                        break;
+                    default:
+                        break;
+                        
+                }
+
+                newInstruction[0] = correctBinary(opcode, 8);
+                assembledInstructions.push(newInstruction.join(""));
+                console.log(arg1);
+            }
+
+            document.getElementById("outputassembled").value = assembledInstructions.join("\n");
+            
+        }
+
+    </script>
+</body>
+</html>

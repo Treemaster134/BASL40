@@ -1,0 +1,51 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "BASL40",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#constants"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#labels"
+		}
+	],
+	"repository": {
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.double-slash.basl40",
+					"match": "((?://).*)$"
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.basl40",
+					"match": "\\b(NOP|HLT|JMZ|JMP|JMN|JMU)\\b"
+				},
+				{
+					"name": "keyword.other.basl40",
+					"match": "\\b(OUT|INP|MOV|SWA|LDR|LDI|STO|LSH|RSH|INC|DEC|ADR|ADI|SBR|SBI|RND|ANR|ANI|ORR|ORI|XOI|XOR)\\b"
+				}
+		
+			]
+		},
+		"constants": {
+			"name": "constant.numeric.basl40",
+			"match": "\\b([bdh][a-fA-F0-9]+)\\b"
+		},
+		"labels": {
+			"name": "constant.language.basl40",
+			"match": "\\b([$][A-Za-z]+)\\b"
+		}
+
+	},
+	"scopeName": "source.basl40"
+}
